@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset=utf-8>
     <title>image</title>
@@ -13,19 +13,19 @@
 <body>
 <div class="global" >
     <div class="container" id="container" >
-        <p class="list" >
+        <p class="list" v-on:click="btn_image" >
             <span class="font" >图片</span>
             <i class="iconfont icontupian icon" ></i>
         </p>
-        <p class="list" >
+        <p class="list" v-on:click="btn_file" >
             <span class="font" >文件</span>
             <i class="iconfont iconbuoumaotubiao25 icon" ></i>
         </p>
-        <p class="list" >
+        <p class="list" v-on:click="btn_video" >
             <span class="font" >视频</span>
             <i class="iconfont iconshipin icon" ></i>
         </p>
-        <p class="list" >
+        <p class="list" v-on:click="btn_more" >
             <span class="font" >更多</span>
             <i class="iconfont icongengduo icon" ></i>
         </p>

@@ -22,7 +22,8 @@ public class WebConfig implements WebMvcConfigurer {
      */
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/upala/core.html").setViewName("core");
+        registry.addViewController("/upala/index.html").setViewName("index");
+        registry.addViewController("/upala/image/image.html").setViewName("/pages/image");
     }
 
     /**
