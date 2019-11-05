@@ -17,6 +17,6 @@ class FinalVarUtil {
     /**
      * 唯一的key
      */
-    final static String key = "137b2595309f2dc3";
+    final static String key = "ac25895a483beac298b4fa93b957188a";
 
 }

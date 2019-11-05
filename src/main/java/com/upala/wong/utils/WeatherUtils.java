@@ -27,51 +27,69 @@ public class WeatherUtils {
         String key = FinalVarUtil.key;
         String url = null;
         if (StringUtils.isEmpty(cityID)) {
-            url = "https://api.jisuapi.com/area/province?appkey=" + key;
+            url = "http://v.juhe.cn/weather/citys?key=" + key;
         } else {
             url = "http://v.juhe.cn/weather/index?ID="+cityID+"&key="+key;
         }
-        return post(url);
+        return post(url, null);
     }
 
-    private static String post(String path) {
-        StringBuffer sbf = new StringBuffer();
+    private static String post(String path, Map<String, String> param) {
+        HttpURLConnection conn = null;
         try {
-            URL realUrl = new URL(path);
-            //将realUrl以 open方法返回的urlConnection  连接强转为HttpURLConnection连接  (标识一个url所引用的远程对象连接)
-            HttpURLConnection connection = (HttpURLConnection) realUrl.openConnection();// 此时cnnection只是为一个连接对象,待连接中
-            //设置连接输出流为true,默认false (post请求是以流的方式隐式的传递参数)
-            connection.setDoOutput(true);
-            //设置连接输入流为true
-            connection.setDoInput(true);
-            //设置请求方式为post
-            connection.setRequestMethod("GET");
-            //post请求缓存设为false
-            connection.setUseCaches(false);
-            //设置该HttpURLConnection实例是否自动执行重定向
-            connection.setInstanceFollowRedirects(true);
-            connection.setConnectTimeout(20000);
-            //设置请求头里面的各个属性 (以下为设置内容的类型,设置为经过urlEncoded编码过的from参数)
-            connection.setRequestProperty("Content-Type", "application/json;charset=utf-8");
-            //建立连接 (请求未开始,直到connection.getInputStream()方法调用时才发起,以上各个参数设置需在此方法之前进行)
-            connection.connect();
-            //创建输入输出流,用于往连接里面输出携带的参数,(输出内容为?后面的内容)
-            DataOutputStream dataout = new DataOutputStream(connection.getOutputStream());
-            // 输出完成后刷新并关闭流
-            dataout.flush();
-            dataout.close(); // 重要且易忽略步骤 (关闭流,切记!)
-            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
-            String lines;
-            while ((lines = reader.readLine()) != null) {
-                lines = new String(lines.getBytes(), "utf-8");
-                sbf.append(lines);
+            URL u = new URL(path);
+            conn = (HttpURLConnection) u.openConnection();
+            StringBuffer sb = null;
+            if (param != null) {// 如果请求参数不为空
+                sb = new StringBuffer();
+                conn.setDoOutput(true);
+                // 设定post方法,默认get
+                conn.setRequestMethod("POST");
+                // 获得输出流
+                OutputStream out = conn.getOutputStream();
+                // 对输出流封装成高级输出流
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out));
+                // 将参数封装成键值对的形式
+                for (Map.Entry<String, String> s : param.entrySet()) {
+                    sb.append(s.getKey()).append("=").append(s.getValue()).append("&");
+                }
+                // 将参数通过输出流写入
+                writer.write(sb.deleteCharAt(sb.toString().length() - 1).toString());
+                writer.close();// 一定要关闭,不然可能出现参数不全的错误
+                sb = null;
             }
-            reader.close();
-            connection.disconnect();
-            System.out.println("返回来的报文："+sbf.toString());
+            conn.connect();// 建立连接
+            sb = new StringBuffer();
+            // 获取连接状态码
+            int recode = conn.getResponseCode();
+            BufferedReader reader = null;
+            if (recode == 200) {
+                // Returns an input stream that reads from this open connection
+                // 从连接中获取输入流
+                InputStream in = conn.getInputStream();
+                // 对输入流进行封装
+                reader = new BufferedReader(new InputStreamReader(in));
+                String str = null;
+                sb = new StringBuffer();
+                // 从输入流中读取数据
+                while ((str = reader.readLine()) != null) {
+                    sb.append(str).append(System.getProperty("line.separator"));
+                }
+                // 关闭输入流
+                reader.close();
+                if (sb.toString().length() == 0) {
+                    return null;
+                }
+                return sb.toString().substring(0,
+                        sb.toString().length() - System.getProperty("line.separator").length());
+            }
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
+        } finally {
+            if (conn != null)// 关闭连接
+                conn.disconnect();
         }
-        return sbf.toString();
+        return null;
     }
 }
