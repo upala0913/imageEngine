@@ -16,22 +16,34 @@ import java.util.Map;
  ********************************/
 
 @RestController
-@RequestMapping("/code")
+@RequestMapping("/user")
 @CrossOrigin
 @Log4j2
-public class CodeController {
+public class LoginController {
 
     /**
      * 获取天气数据
      *
      * @return 返回值
      */
-    @RequestMapping(value = "getCodeInfo", method = RequestMethod.POST)
+    @RequestMapping(value = "/code/getCodeInfo", method = RequestMethod.POST)
     public Map<String, Object> getWeatherData(HttpSession session) {
         String code = StringJsonUtil.getCode();
         // 将获取到的验证码保存到session中，以便登陆的时候获取
         session.setAttribute("code", code);
         return StringJsonUtil.stringToJsonObject(code);
+    }
+
+    /**
+     * 登陆信息
+     * @param param 入参
+     * @return 返回值
+     */
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public Map<String, Object> LoginUser(@RequestBody String param) {
+        Map<String, Object> map = StringJsonUtil.stringToJsonObject(param);
+        log.info("登陆信息：{}", map);
+        return map;
     }
 
 }
