@@ -21,10 +21,29 @@ public class StringJsonUtil {
      * @return 返回值
      */
     public static Map<String, Object> stringToJsonObject(String param) {
-        JSONObject jsonObject = JSONObject.parseObject(param);
         Map<String, Object> map = new HashMap<>(FinalVarUtil.MAP_SIZE);
-        map.putAll(jsonObject);
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = JSONObject.parseObject(param);
+            map.putAll(jsonObject);
+        } catch (RuntimeException e) {
+            map.put("message", param);
+        }
         return map;
+    }
+
+    /**
+     * 获取验证码信息
+     * @return 返回值
+     */
+    public static String getCode() {
+        String str = "qwertyuioplkjhgfdsazxcvbnmQAZXSWEDCVFRTGBNHYUJMKLOIP1234567890@#$%&";
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < 4; i++) {
+            int ran = (int)(Math.random()*67);
+            sb.append(str.charAt(ran));
+        }
+        return sb.toString();
     }
 
 }

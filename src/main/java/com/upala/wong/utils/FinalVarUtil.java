@@ -14,9 +14,4 @@ class FinalVarUtil {
      */
     final static int MAP_SIZE = 16;
 
-    /**
-     * 唯一的key
-     */
-    final static String key = "ac25895a483beac298b4fa93b957188a";
-
 }
