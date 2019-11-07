@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.upala.wong.mapper.LoginMapper" >
+
+    <!-- 登陆 -->
+    <select id="loginUser" resultType="com.upala.wong.entity.Manager" >
+        SELECT * FROM manage WHERE username = #{param} OR mobile = #{param}
+          OR email = #{param} AND userpass = #{password}
+    </select>
+
+</mapper>

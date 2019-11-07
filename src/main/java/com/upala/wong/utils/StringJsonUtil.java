@@ -46,4 +46,19 @@ public class StringJsonUtil {
         return sb.toString();
     }
 
+    /**
+     * 获取返回数据对象
+     * @param status 代码号
+     * @param message 信息
+     * @param data 数据
+     * @return 返回值<b>map<String, Object></b>
+     */
+    public static Map<String, Object> getResult(int status, String message, Object data) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("status", status);
+        map.put("message", message);
+        map.put("data", data);
+        return map;
+    }
+
 }
