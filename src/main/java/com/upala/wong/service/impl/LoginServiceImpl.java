@@ -33,28 +33,29 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public Map<String, Object> loginUser(Map<String, Object> param, String code) {
         String key = (String) param.get("code");
-        // 小写
-        boolean b1 = key.toLowerCase().equals(code.toLowerCase());
-        // 大写
-        boolean b2 = key.toUpperCase().equals(code.toUpperCase());
-        // 原型
-        boolean b3 = key.equals(code);
-        // 三个有其中一个为true，则验证码正确
-        if (b1 || b2 || b3) {
-            String username = ((String) param.get("username")).trim();
-            String password = ((String) param.get("password")).trim();
-            if (!StringUtils.isEmpty(username) || !StringUtils.isEmpty(password)) {
-                Manager manager = loginMapper.loginUser(username, password);
-                if (manager != null)
-                    return StringJsonUtil.getResult(200, "登陆成功", manager);
-                else
-                    return StringJsonUtil.getResult(10001, "用户名或密码错误", null);
-            } else {
-                return StringJsonUtil.getResult(10002, "用户名密码不能为空", null);
+        if (!StringUtils.isEmpty(code)) {
+            // 小写
+            boolean b1 = key.toLowerCase().equals(code.toLowerCase());
+            // 大写
+            boolean b2 = key.toUpperCase().equals(code.toUpperCase());
+            // 原型
+            boolean b3 = key.equals(code);
+            // 三个有其中一个为true，则验证码正确
+            if (b1 || b2 || b3) {
+                String username = ((String) param.get("username")).trim();
+                String password = ((String) param.get("password")).trim();
+                if (!StringUtils.isEmpty(username) || !StringUtils.isEmpty(password)) {
+                    Manager manager = loginMapper.loginUser(username, password);
+                    if (manager != null)
+                        return StringJsonUtil.getResult(200, "登陆成功", manager);
+                    else
+                        return StringJsonUtil.getResult(10001, "用户名或密码错误", null);
+                } else {
+                    return StringJsonUtil.getResult(10002, "用户名密码不能为空", null);
+                }
             }
-        } else {
-            return StringJsonUtil.getResult(10000, "验证码错误", null);
         }
+        return StringJsonUtil.getResult(10000, "验证码错误", null);
     }
 
 }
