@@ -14,4 +14,6 @@ public interface LoginService {
 
     Map<String, Object> loginUser(Map<String, Object> param, String code);
 
+    Map<String, Object> getPersonInfo(Map<String, Object> param);
+
 }

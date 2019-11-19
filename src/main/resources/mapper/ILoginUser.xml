@@ -5,8 +5,15 @@
 
     <!-- 登陆 -->
     <select id="loginUser" resultType="com.upala.wong.entity.Manager" >
-        SELECT * FROM manage WHERE username = #{param} OR mobile = #{param}
+        SELECT id, username userName, userpass userPass, mobile, email, photo, re_name `reName`
+        FROM manage WHERE username = #{param} OR mobile = #{param}
           OR email = #{param} AND userpass = #{password}
+    </select>
+
+    <!-- 获取个人信息 -->
+    <select id="getPersonInfo" resultType="com.upala.wong.entity.Manager" >
+        SELECT id, username userName, userpass userPass, mobile, email, photo, re_name `reName`
+        FROM manage WHERE id = #{id}
     </select>
 
 </mapper>

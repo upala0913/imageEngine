@@ -58,4 +58,16 @@ public class LoginServiceImpl implements LoginService {
         return StringJsonUtil.getResult(10000, "验证码错误", null);
     }
 
+    /**
+     * 获取个人信息
+     * @param param 入参
+     * @return 返回值
+     */
+    @Override
+    public Map<String, Object> getPersonInfo(Map<String, Object> param) {
+        int id = Integer.parseInt(param.get("id").toString());
+        Manager personInfo = loginMapper.getPersonInfo(id);
+        return StringJsonUtil.getResult(200, "获取个人数据成功", personInfo);
+    }
+
 }
