@@ -27,6 +27,7 @@ public class PersonalController {
 	 * 实名认证
 	 * @param param 入参
 	 * @return 返回值
+	 *
 	 */
 	@RequestMapping(value = "/reName", method = RequestMethod.POST)
 	public Map<String, Object> reName(@RequestBody String param) {
