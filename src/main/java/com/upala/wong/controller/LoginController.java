@@ -86,6 +86,18 @@ public class LoginController {
         return StringJsonUtil.getResult(200, "销毁成功", null);
     }
 
+    /**
+     * 进个人中心页面获取个人信息
+     * @param param 入参
+     * @return 返回值
+     */
+    @RequestMapping(value = "/getPersonInfo", method = RequestMethod.POST)
+    public Map<String, Object> toPersonal(@RequestBody String param) {
+        log.info("参数信息：{}", param);
+        Map<String, Object> map = StringJsonUtil.stringToJsonObject(param);
+        return loginService.getPersonInfo(map);
+    }
+
     private Map<String, Object> getData(HttpSession session) {
         Manager manager = (Manager) session.getAttribute("manager");
         if (manager == null)

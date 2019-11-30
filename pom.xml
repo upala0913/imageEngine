@@ -7,6 +7,7 @@
     <groupId>com.upala.wong</groupId>
     <artifactId>image</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
 
     <name>image</name>
     <!-- FIXME change it to the project's website -->
@@ -133,6 +134,7 @@
     </dependencies>
 
     <build>
+        <finalName>document</finalName>
         <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
             <plugins>
                 <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
@@ -169,10 +171,6 @@
                 <plugin>
                     <artifactId>maven-site-plugin</artifactId>
                     <version>3.7.1</version>
-                </plugin>
-                <plugin>
-                    <artifactId>maven-project-info-reports-plugin</artifactId>
-                    <version>3.0.0</version>
                 </plugin>
             </plugins>
         </pluginManagement>

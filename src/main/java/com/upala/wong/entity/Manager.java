@@ -18,5 +18,7 @@ public class Manager {
     private String userPass;
     private String mobile;
     private String email;
+    private String photo;
+    private String reName;
 
 }
