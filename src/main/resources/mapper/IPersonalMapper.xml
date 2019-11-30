@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.upala.wong.mapper.PersonalMapper" >
+
+    <update id="reName" keyProperty="id" useGeneratedKeys="true" >
+        UPDATE manage SET
+        <if test="reName != null and reName != '' " >
+            re_name = #{reName}
+        </if>
+        WHERE
+        <if test="id != null and id != '' " >
+            id = #{id}
+        </if>
+    </update>
+
+</mapper>
