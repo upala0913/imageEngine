@@ -58,4 +58,9 @@ public class PersonalController {
 		return personalService.getMessage(data, session);
 	}
 
+	public Map<String, Object> getEmailMessage(@RequestBody String param) {
+		Map<String, Object> data = StringJsonUtil.stringToJsonObject(param);
+		return null;
+	}
+
 }

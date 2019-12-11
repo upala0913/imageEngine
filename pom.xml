@@ -132,6 +132,12 @@
             <artifactId>qcloudsms</artifactId>
             <version>1.0.6</version>
         </dependency>
+        <!-- 邮件 -->
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.6.1</version>
+        </dependency>
         <!-- mongodb -->
         <!--<dependency>-->
             <!--<groupId>org.springframework.boot</groupId>-->

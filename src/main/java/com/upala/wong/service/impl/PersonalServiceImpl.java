@@ -3,13 +3,12 @@ package com.upala.wong.service.impl;
 import com.github.qcloudsms.SmsSingleSenderResult;
 import com.upala.wong.mapper.PersonalMapper;
 import com.upala.wong.service.PersonalService;
-import com.upala.wong.utils.Message;
+import com.upala.wong.utils.MessageUtils;
 import com.upala.wong.utils.StringJsonUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 /*****************************
@@ -25,6 +24,8 @@ public class PersonalServiceImpl implements PersonalService {
 	private PersonalMapper personalMapper;
 
 	private static String checkCode = StringJsonUtil.getCheck(6);
+
+	private static String emailCode = StringJsonUtil.getCheck(6);
 
 	/**
 	 * 实名认证
@@ -54,7 +55,7 @@ public class PersonalServiceImpl implements PersonalService {
 	 * @return 返回值
 	 */
 	@Override
-	public Map<String, Object> bindMobile(Map<String, Object> data, HttpSession session) {
+	public Map<String, Object> bindMobile(Map<String, Object> data) {
 		String mobile = (String) data.get("mobile");
 		String check = (String) data.get("check");
 		String id = (String) data.get("id");
@@ -78,15 +79,23 @@ public class PersonalServiceImpl implements PersonalService {
 	 * @return 返回值
 	 */
 	@Override
-	public Map<String, Object> getMessage(Map<String, Object> data, HttpSession session) {
+	public Map<String, Object> getMessage(Map<String, Object> data) {
 		String mobile = (String) data.get("mobile");
 		String upala = (String) data.get("upala");
 		String[] phones = {mobile};
 		String[] cons = {upala, checkCode};
-		SmsSingleSenderResult result = Message.sendMessage(phones, cons);
+		SmsSingleSenderResult result = MessageUtils.sendMessage(phones, cons);
 		if (result == null) {
 			return StringJsonUtil.getResult(1007, "短信验证码发送失败", null);
 		}
 		return StringJsonUtil.getResult(200, "短信验证码已发送至"+mobile+"，请注意查收", result);
+	}
+
+	@Override
+	public Map<String, Object> getEmailMessage(Map<String, Object> data) {
+		String email = (String) data.get("email");
+		String str = data.get("upala") + "先生/女士，你申请账号的验证码是：" + emailCode;
+		boolean flag = MessageUtils.sendMail(email, str);
+		return null;
 	}
 }
