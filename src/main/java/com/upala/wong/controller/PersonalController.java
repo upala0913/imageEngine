@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 /*****************************
@@ -33,6 +34,28 @@ public class PersonalController {
 	public Map<String, Object> reName(@RequestBody String param) {
 		Map<String, Object> data = StringJsonUtil.stringToJsonObject(param);
 		return personalService.reName(data);
+	}
+
+	/**
+	 * 绑定电话
+	 * @param param 入参
+	 * @return 返回值
+	 */
+	@RequestMapping(value = "/bindMobile", method = RequestMethod.POST)
+	public Map<String, Object> bindMobile(@RequestBody String param, HttpSession session) {
+		Map<String, Object> data = StringJsonUtil.stringToJsonObject(param);
+		return personalService.bindMobile(data, session);
+	}
+
+	/**
+	 * 获取短信验证码
+	 * @param param 入参
+	 * @return 返回值
+	 */
+	@RequestMapping(value = "/getMessage", method = RequestMethod.POST)
+	public Map<String, Object> getMessage(@RequestBody String param, HttpSession session) {
+		Map<String, Object> data = StringJsonUtil.stringToJsonObject(param);
+		return personalService.getMessage(data, session);
 	}
 
 }

@@ -3,12 +3,25 @@
 
 <mapper namespace="com.upala.wong.mapper.PersonalMapper" >
 
+    <!-- 实名认证 -->
     <update id="reName" keyProperty="id" useGeneratedKeys="true" >
-        UPDATE manage SET
+      UPDATE manage SET
         <if test="reName != null and reName != '' " >
-            re_name = #{reName}
+          re_name = #{reName}
         </if>
-        WHERE
+      WHERE
+        <if test="id != null and id != '' " >
+            id = #{id}
+        </if>
+    </update>
+
+    <!-- 绑定电话 -->
+    <update id="bindMobile" keyProperty="id" useGeneratedKeys="true" >
+      UPDATE manage SET
+        <if test="mobile != null and mobile != '' " >
+          mobile = #{mobile}
+        </if>
+      WHERE
         <if test="id != null and id != '' " >
             id = #{id}
         </if>

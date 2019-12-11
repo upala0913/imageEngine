@@ -34,7 +34,7 @@ public class LoginController {
      */
     @RequestMapping(value = "/code/getCodeInfo", method = RequestMethod.POST)
     public Map<String, Object> getWeatherData(HttpSession session) {
-        String code = StringJsonUtil.getCode();
+        String code = StringJsonUtil.getCode(4);
         // 将获取到的验证码保存到session中，以便登陆的时候获取
         session.setAttribute("code", code);
         return StringJsonUtil.stringToJsonObject(code);

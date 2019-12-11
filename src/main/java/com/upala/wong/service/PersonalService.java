@@ -1,5 +1,6 @@
 package com.upala.wong.service;
 
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 /*****************************
@@ -10,5 +11,9 @@ import java.util.Map;
 public interface PersonalService {
 
 	Map<String, Object> reName(Map<String, Object> data);
+
+	Map<String, Object> bindMobile(Map<String, Object> data, HttpSession session);
+
+	Map<String, Object> getMessage(Map<String, Object> data, HttpSession session);
 
 }

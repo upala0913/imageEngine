@@ -126,6 +126,12 @@
             <artifactId>nekohtml</artifactId>
             <version>1.9.21</version>
         </dependency>
+        <!-- 短信 -->
+        <dependency>
+            <groupId>com.github.qcloudsms</groupId>
+            <artifactId>qcloudsms</artifactId>
+            <version>1.0.6</version>
+        </dependency>
         <!-- mongodb -->
         <!--<dependency>-->
             <!--<groupId>org.springframework.boot</groupId>-->

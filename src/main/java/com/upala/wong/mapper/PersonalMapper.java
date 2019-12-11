@@ -11,4 +11,6 @@ public interface PersonalMapper {
 
 	Integer reName(@Param("reName") String reName, @Param("id") int id);
 
+	Integer bindMobile(@Param("mobile") String mobile, @Param("id") int id);
+
 }
