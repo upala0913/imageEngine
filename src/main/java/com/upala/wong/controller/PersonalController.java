@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 /*****************************
@@ -42,9 +41,9 @@ public class PersonalController {
 	 * @return 返回值
 	 */
 	@RequestMapping(value = "/bindMobile", method = RequestMethod.POST)
-	public Map<String, Object> bindMobile(@RequestBody String param, HttpSession session) {
+	public Map<String, Object> bindMobile(@RequestBody String param) {
 		Map<String, Object> data = StringJsonUtil.stringToJsonObject(param);
-		return personalService.bindMobile(data, session);
+		return personalService.bindMobile(data);
 	}
 
 	/**
@@ -53,14 +52,31 @@ public class PersonalController {
 	 * @return 返回值
 	 */
 	@RequestMapping(value = "/getMessage", method = RequestMethod.POST)
-	public Map<String, Object> getMessage(@RequestBody String param, HttpSession session) {
+	public Map<String, Object> getMessage(@RequestBody String param) {
 		Map<String, Object> data = StringJsonUtil.stringToJsonObject(param);
-		return personalService.getMessage(data, session);
+		return personalService.getMessage(data);
 	}
 
+	/**
+	 * 获取邮箱验证码
+	 * @param param 入参
+	 * @return 返回值
+	 */
+	@RequestMapping(value = "/emailMessage", method = RequestMethod.POST)
 	public Map<String, Object> getEmailMessage(@RequestBody String param) {
 		Map<String, Object> data = StringJsonUtil.stringToJsonObject(param);
-		return null;
+		return personalService.getEmailMessage(data);
+	}
+
+	/**
+	 * 绑定邮箱
+	 * @param param 淡定邮箱的参数
+	 * @return 返回值--返回绑定邮箱的状态
+	 */
+	@RequestMapping(value = "/bindEmail", method = RequestMethod.POST)
+	public Map<String, Object> bindEmail(@RequestBody String param) {
+		Map<String, Object> data = StringJsonUtil.stringToJsonObject(param);
+		return personalService.bindEmail(data);
 	}
 
 }

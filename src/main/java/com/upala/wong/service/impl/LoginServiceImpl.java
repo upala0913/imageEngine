@@ -3,6 +3,7 @@ package com.upala.wong.service.impl;
 import com.upala.wong.entity.Manager;
 import com.upala.wong.mapper.LoginMapper;
 import com.upala.wong.service.LoginService;
+import com.upala.wong.utils.MessageUtils;
 import com.upala.wong.utils.StringJsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,15 +48,15 @@ public class LoginServiceImpl implements LoginService {
                 if (!StringUtils.isEmpty(username) || !StringUtils.isEmpty(password)) {
                     Manager manager = loginMapper.loginUser(username, password);
                     if (manager != null)
-                        return StringJsonUtil.getResult(200, "登陆成功", manager);
+                        return MessageUtils.getResult(200, "登陆成功", manager);
                     else
-                        return StringJsonUtil.getResult(10001, "用户名或密码错误", null);
+                        return MessageUtils.getResult(10001, "用户名或密码错误", null);
                 } else {
-                    return StringJsonUtil.getResult(10002, "用户名密码不能为空", null);
+                    return MessageUtils.getResult(10002, "用户名密码不能为空", null);
                 }
             }
         }
-        return StringJsonUtil.getResult(10000, "验证码错误", null);
+        return MessageUtils.getResult(10000, "验证码错误", null);
     }
 
     /**
@@ -67,7 +68,7 @@ public class LoginServiceImpl implements LoginService {
     public Map<String, Object> getPersonInfo(Map<String, Object> param) {
         int id = Integer.parseInt(param.get("id").toString());
         Manager personInfo = loginMapper.getPersonInfo(id);
-        return StringJsonUtil.getResult(200, "获取个人数据成功", personInfo);
+        return MessageUtils.getResult(200, "获取个人数据成功", personInfo);
     }
 
 }

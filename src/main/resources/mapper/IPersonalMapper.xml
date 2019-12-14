@@ -27,4 +27,16 @@
         </if>
     </update>
 
+    <!-- 绑定电话 -->
+    <update id="bindEmail" keyProperty="id" useGeneratedKeys="true" >
+        UPDATE manage SET
+        <if test="email != null and email != '' " >
+            email = #{email}
+        </if>
+        WHERE
+        <if test="id != null and id != '' " >
+            id = #{id}
+        </if>
+    </update>
+
 </mapper>

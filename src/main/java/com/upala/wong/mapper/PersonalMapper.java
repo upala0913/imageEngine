@@ -13,4 +13,6 @@ public interface PersonalMapper {
 
 	Integer bindMobile(@Param("mobile") String mobile, @Param("id") int id);
 
+	Integer bindEmail(@Param("email") String email, @Param("id") int id);
+
 }

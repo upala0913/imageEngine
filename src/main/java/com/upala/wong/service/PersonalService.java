@@ -18,4 +18,6 @@ public interface PersonalService {
 
 	Map<String, Object> getEmailMessage(Map<String, Object> data);
 
+	Map<String, Object> bindEmail(Map<String, Object> data);
+
 }

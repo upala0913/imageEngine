@@ -43,7 +43,8 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new ImageInterceptor()).addPathPatterns("/**")
-                .excludePathPatterns("/user/code/getCodeInfo", "/user/login", "/user/skip/pages", "/personal/getMessage", "/personal/bindMobile");
+                .excludePathPatterns("/user/code/getCodeInfo", "/user/login", "/user/skip/pages",
+						"/personal/getMessage", "/personal/bindMobile", "/personal/emailMessage", "/personal/bindEmail");
     }
 
 }

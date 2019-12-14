@@ -2,6 +2,7 @@ package com.upala.wong.controller;
 
 import com.upala.wong.entity.Manager;
 import com.upala.wong.service.LoginService;
+import com.upala.wong.utils.MessageUtils;
 import com.upala.wong.utils.StringJsonUtil;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,7 +84,7 @@ public class LoginController {
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
     public Map<String, Object> logout(HttpSession session) {
         session.invalidate();
-        return StringJsonUtil.getResult(200, "销毁成功", null);
+        return MessageUtils.getResult(200, "销毁成功", null);
     }
 
     /**
@@ -101,9 +102,9 @@ public class LoginController {
     private Map<String, Object> getData(HttpSession session) {
         Manager manager = (Manager) session.getAttribute("manager");
         if (manager == null)
-            return StringJsonUtil.getResult(10003, "请先登录", null);
+            return MessageUtils.getResult(10003, "请先登录", null);
         else
-            return StringJsonUtil.getResult(10004, "已登陆", manager);
+            return MessageUtils.getResult(10004, "已登陆", manager);
     }
 
 }

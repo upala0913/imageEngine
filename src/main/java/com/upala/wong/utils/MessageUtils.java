@@ -10,6 +10,8 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 /*****************************
@@ -25,7 +27,7 @@ public class MessageUtils {
 	 * 撒送短信
 	 *
 	 * @param phoneNumbers 入参
-	 * @param con          入参
+	 * @param con 入参
 	 */
 	public static SmsSingleSenderResult sendMessage(String[] phoneNumbers, String[] con) {
 		SmsSingleSenderResult result = null;
@@ -42,43 +44,19 @@ public class MessageUtils {
 	}
 
 	/**
-	 * 发送邮件方法
-	 * @param toUser 入参
-	 * @param content 入参
-	 * @return 返回值
+	 * 获取返回数据对象
+	 *
+	 * @param status  代码号
+	 * @param message 信息
+	 * @param data 数据
+	 * @return 返回值<b>map<String, Object></b>
 	 */
-	public static boolean sendMail(String toUser, String content) {
-		final Properties proper = new Properties();
-		proper.setProperty("mail.transport.protocol", "SMTP");
-		proper.setProperty("mail.smtp.host", "smtp.163.com");
-		proper.setProperty("mail.smtp.port", "25");
-		proper.setProperty("mail.smtp.auth", "true");
-		proper.setProperty("mail.smtp.timeout", "1000");
-		//1、获取连接，连接到收件人信息
-		Session session = Session.getInstance(proper, new Authenticator() {
-			@Override
-			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication("upala178421@163.com", "wp940818");
-			}
-		});
-		//2、创建邮件对象
-		Message message = new MimeMessage(session);
-		try {
-			message.setFrom(new InternetAddress("upala178421@163.com")); // 设置发件人的信息
-			message.setRecipient(Message.RecipientType.TO, new InternetAddress(toUser)); // 设置收件人信息
-			message.setRecipient(Message.RecipientType.CC, new InternetAddress(toUser)); // 设置抄送人信息
-			message.setContent(content, "text/text;charset=utf-8");
-		} catch (MessagingException e) {
-			log.error("创建邮件对象错误", e);
-		}
-		//3、发送邮件
-		try {
-			Transport.send(message);
-			return true;
-		} catch (MessagingException e) {
-			log.error("发送邮件错误！", e);
-			return false;
-		}
+	public static Map<String, Object> getResult(int status, String message, Object data) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("status", status);
+		map.put("message", message);
+		map.put("data", data);
+		return map;
 	}
 
 }
