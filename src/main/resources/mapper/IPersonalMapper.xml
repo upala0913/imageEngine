@@ -39,4 +39,28 @@
         </if>
     </update>
 
+    <!-- 查询个人信息 -->
+    <select id="getPersonal" resultType="com.upala.wong.entity.Manager" >
+      SELECT id, username userName, userpass userPass, mobile, email, photo, re_name `reName` FROM manage WHERE
+        <if test="id != null and id != '' " >
+          id = #{id}
+        </if>
+    </select>
+
+    <!-- 查询电话 -->
+    <select id="getMobile" resultType="String" >
+      SELECT mobile FROM manage WHERE
+        <if test="id != null and id != '' " >
+          id = #{id}
+        </if>
+    </select>
+
+    <!-- 查询邮箱 -->
+    <select id="getEmail" resultType="String" >
+        SELECT email FROM manage WHERE
+        <if test="id != null and id != '' " >
+            id = #{id}
+        </if>
+    </select>
+
 </mapper>

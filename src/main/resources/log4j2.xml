@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Configuration status="debug" strict="true" name="XMLConfigTest" packages="org.apache.logging.log4j.test">
+<Configuration status="info" strict="true" name="XMLConfigTest" packages="org.apache.logging.log4j.test">
     <Properties>
         <Property name="filename">E:\\log4j.log</Property>
     </Properties>
-    <Filter type="ThresholdFilter" level="debug"/>
+    <Filter type="ThresholdFilter" level="info"/>
     <Appenders>
         <Appender type="Console" name="STDOUT">
             <Layout type="PatternLayout" pattern="%p:%d{yyyy-MM-dd HH:mm:ss} %l %m%n"/>
@@ -28,17 +28,17 @@
     </Appenders>
 
     <Loggers>
-        <Logger name="org.apache.logging.log4j.test1" level="debug" additivity="false">
+        <Logger name="org.apache.logging.log4j.test1" level="info" additivity="false">
             <Filter type="ThreadContextMapFilter">
                 <KeyValuePair key="test" value="123"/>
             </Filter>
             <AppenderRef ref="STDOUT"/>
         </Logger>
 
-        <Logger name="org.apache.logging.log4j.test2" level="debug" additivity="false">
+        <Logger name="org.apache.logging.log4j.test2" level="info" additivity="false">
             <AppenderRef ref="File"/>
         </Logger>
-        <Root level="debug">
+        <Root level="info">
             <AppenderRef ref="STDOUT"/>
         </Root>
     </Loggers>

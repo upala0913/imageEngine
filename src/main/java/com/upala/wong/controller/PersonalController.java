@@ -70,13 +70,24 @@ public class PersonalController {
 
 	/**
 	 * 绑定邮箱
-	 * @param param 淡定邮箱的参数
+	 * @param param 绑定邮箱的参数
 	 * @return 返回值--返回绑定邮箱的状态
 	 */
 	@RequestMapping(value = "/bindEmail", method = RequestMethod.POST)
 	public Map<String, Object> bindEmail(@RequestBody String param) {
 		Map<String, Object> data = StringJsonUtil.stringToJsonObject(param);
 		return personalService.bindEmail(data);
+	}
+
+	/**
+	 * 获取个人信息
+	 * @param param 入参--用户信息ID
+	 * @return 返回值--返回值用户信息
+	 */
+	@RequestMapping(value = "/personal", method = RequestMethod.POST)
+	public Map<String, Object> getPerson(@RequestBody String param) {
+		Map<String, Object> data = StringJsonUtil.stringToJsonObject(param);
+		return personalService.getPerson(data);
 	}
 
 }

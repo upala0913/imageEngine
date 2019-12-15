@@ -1,6 +1,7 @@
 package com.upala.wong.service.impl;
 
 import com.github.qcloudsms.SmsSingleSenderResult;
+import com.upala.wong.entity.Manager;
 import com.upala.wong.mapper.PersonalMapper;
 import com.upala.wong.service.PersonalService;
 import com.upala.wong.utils.EmailUtils;
@@ -65,16 +66,15 @@ public class PersonalServiceImpl implements PersonalService {
 	public Map<String, Object> bindMobile(Map<String, Object> data) {
 		String mobile = (String) data.get("mobile");
 		String check = (String) data.get("check");
-		String id = (String) data.get("id");
+		String ids = (String) data.get("id");
+		int id = Integer.parseInt(ids);
 		if (StringUtils.isEmpty(mobile))
 			return MessageUtils.getResult(1005, "电话不能为空", null);
-		if (StringUtils.isEmpty(id))
-			return MessageUtils.getResult(1003, "没有唯一的标识码", null);
 		if (StringUtils.isEmpty(check))
 			return MessageUtils.getResult(1008, "验证码为空", null);
 		if (!check.equals(checkCode))
 			return MessageUtils.getResult(1009, "验证码错误", null);
-		Integer res = personalMapper.bindMobile(mobile, Integer.parseInt(id));
+		Integer res = personalMapper.bindMobile(mobile, id);
 		if (res <= 0)
 			return MessageUtils.getResult(1006, "绑定电话失败", null);
 		return MessageUtils.getResult(200, "电话绑定成功", res);
@@ -89,6 +89,13 @@ public class PersonalServiceImpl implements PersonalService {
 	public Map<String, Object> getMessage(Map<String, Object> data) {
 		String mobile = (String) data.get("mobile");
 		String name = (String) data.get("username");
+		String ids = (String) data.get("id");
+		int id = Integer.parseInt(ids);
+		if (StringUtils.isEmpty(ids))
+			return MessageUtils.getResult(1003, "没有唯一的标识码", null);
+		String mobile1 = personalMapper.getMobile(id);
+		if (!StringUtils.isEmpty(mobile1)) // 电话已绑定，则不需要再次绑定
+			return MessageUtils.getResult(1020, "电话已绑定", mobile1);
 		String[] phones = {mobile};
 		String[] cons = {name, checkCode};
 		SmsSingleSenderResult result = MessageUtils.sendMessage(phones, cons);
@@ -107,6 +114,12 @@ public class PersonalServiceImpl implements PersonalService {
 	public Map<String, Object> getEmailMessage(Map<String, Object> data) {
 		String email = (String) data.get("email");
 		String name = (String) data.get("username");
+		String ids = (String) data.get("id");
+		if (StringUtils.isEmpty(ids))
+			return MessageUtils.getResult(1013, "账户序列号为空，操作终止", null);
+		String email1 = personalMapper.getEmail(Integer.parseInt(ids));
+		if (!StringUtils.isEmpty(email1)) // 邮箱已绑定，则无需再次绑定
+			return MessageUtils.getResult(1021, "邮箱已绑定", email1);
 		if (StringUtils.isEmpty(email))
 			return MessageUtils.getResult(1010, "邮箱为空", null);
 		if (StringUtils.isEmpty(name))
@@ -129,20 +142,37 @@ public class PersonalServiceImpl implements PersonalService {
 	@Override
 	public Map<String, Object> bindEmail(Map<String, Object> data) {
 		String email = (String) data.get("email");
-		String id = (String) data.get("id");
 		String check = (String) data.get("check");
+		String ids = (String) data.get("id");
+		int id = Integer.parseInt(ids);
+		if (StringUtils.isEmpty(ids))
+			return MessageUtils.getResult(1013, "账户序列号为空，操作终止", null);
 		if (StringUtils.isEmpty(check))
 			return MessageUtils.getResult(1014, "邮箱验证码为空，操作终止", null);
 		if (!emailCode.equals(check))
 			return MessageUtils.getResult(1011, "邮箱验证码不正确", null);
 		if (StringUtils.isEmpty(email))
 			return MessageUtils.getResult(1012, "邮箱为空，请重新输入", null);
-		if (StringUtils.isEmpty(id))
-			return MessageUtils.getResult(1013, "账户序列号为空，操作终止", null);
-		Integer res = personalMapper.bindEmail(email, Integer.parseInt(id));
+		Integer res = personalMapper.bindEmail(email, id);
 		if (res <= 0)
 			return MessageUtils.getResult(1015, "绑定邮箱失败", null);
 		return MessageUtils.getResult(200, "绑定邮箱成功", res);
+	}
+
+	/**
+	 * 获取个人信息
+	 * @param data 入参
+	 * @return 返回值
+	 */
+	@Override
+	public Map<String, Object> getPerson(Map<String, Object> data) {
+		String id = (String) data.get("id");
+		if (StringUtils.isEmpty(id))
+			return MessageUtils.getResult(1016, "账户序列号为空，操作终止", null);
+		Manager personal = personalMapper.getPersonal(Integer.parseInt(id));
+		if (personal == null)
+			return MessageUtils.getResult(1017, "没有该用户", null);
+		return MessageUtils.getResult(200, "查询成功", personal);
 	}
 
 }

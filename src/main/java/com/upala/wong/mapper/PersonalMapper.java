@@ -1,5 +1,6 @@
 package com.upala.wong.mapper;
 
+import com.upala.wong.entity.Manager;
 import org.apache.ibatis.annotations.Param;
 
 /*****************************
@@ -14,5 +15,11 @@ public interface PersonalMapper {
 	Integer bindMobile(@Param("mobile") String mobile, @Param("id") int id);
 
 	Integer bindEmail(@Param("email") String email, @Param("id") int id);
+
+	Manager getPersonal(@Param("id") int id);
+
+	String getMobile(@Param("id") int id);
+
+	String getEmail(@Param("id") int id);
 
 }
