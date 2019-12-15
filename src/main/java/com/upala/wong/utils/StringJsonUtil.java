@@ -42,7 +42,7 @@ public class StringJsonUtil {
 		String str = "qwertyuioplkjhgfdsazxcvbnmQAZXSWEDCVFRTGBNHYUJMKLOIP1234567890";
 		StringBuffer sb = new StringBuffer();
 		for (int i = 0; i < len; i++) {
-			int ran = (int) (Math.random() * 62);
+			int ran = (int) (Math.random() * str.length());
 			sb.append(str.charAt(ran));
 		}
 		return sb.toString();
