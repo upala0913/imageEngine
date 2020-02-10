@@ -2,6 +2,9 @@ package com.upala.wong.controller;
 
 import com.upala.wong.service.PersonalService;
 import com.upala.wong.utils.StringJsonUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +21,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/personal")
+@Api(value = "个人信息API", tags = "个人信息API")
 public class PersonalController {
 
 	@Autowired
@@ -30,6 +34,8 @@ public class PersonalController {
 	 *
 	 */
 	@RequestMapping(value = "/reName", method = RequestMethod.POST)
+	@ApiOperation(value = "实名认证", notes = "实名认证")
+	@ApiImplicitParam(name = "param", value = "json格式传参", required = true, dataType = "json")
 	public Map<String, Object> reName(@RequestBody String param) {
 		Map<String, Object> data = StringJsonUtil.stringToJsonObject(param);
 		return personalService.reName(data);
