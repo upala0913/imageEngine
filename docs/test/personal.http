@@ -1,0 +1,16 @@
+### 测试接口
+POST http://{{host}}:{{port}}/personal/getString
+Accept: */*
+Content-Type: application/json;charset=utf-8
+
+{
+    "id": {{$uuid}}
+}
+
+> {%
+     client.test("测试", function() {
+         client.assert(response.body.res.message !== null, "请求失败");
+     });
+ %}
+
+###

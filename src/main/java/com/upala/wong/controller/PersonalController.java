@@ -1,16 +1,16 @@
 package com.upala.wong.controller;
 
+import com.google.common.collect.Maps;
 import com.upala.wong.service.PersonalService;
 import com.upala.wong.utils.StringJsonUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /*****************************
@@ -21,6 +21,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/personal")
+@Log4j2
 @Api(value = "个人信息API", tags = "个人信息API")
 public class PersonalController {
 
@@ -95,5 +96,13 @@ public class PersonalController {
 		Map<String, Object> data = StringJsonUtil.stringToJsonObject(param);
 		return personalService.getPerson(data);
 	}
+
+	@RequestMapping(value = "/getString", method = RequestMethod.POST)
+	public Map<String, Object> getString(@RequestBody Map<String, Object> param) {
+	    log.info("参数：{}", param);
+        HashMap<String, Object> hashMap = Maps.newHashMap();
+        hashMap.put("res", param);
+        return hashMap;
+    }
 
 }
