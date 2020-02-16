@@ -1,5 +1,6 @@
 package com.upala.wong.entity;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -12,10 +13,11 @@ import lombok.Data;
  ********************************/
 
 @Data
+@ApiModel
 public class Manager {
 
     @ApiModelProperty("用户ID，必须唯一")
-    private Integer id;
+    private String id;
     @ApiModelProperty("用户名称")
     private String userName;
     @ApiModelProperty("用户登录密码")

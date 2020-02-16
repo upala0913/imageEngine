@@ -1,5 +1,8 @@
 package com.upala.wong.controller;
 
+import com.github.xiaoymin.knife4j.annotations.DynamicParameter;
+import com.github.xiaoymin.knife4j.annotations.DynamicParameters;
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.upala.wong.common.FinalVarCommon;
 import com.upala.wong.common.ResponseCommon;
 import com.upala.wong.entity.Manager;
@@ -53,14 +56,19 @@ public class LoginController {
      * @param param 入参
      * @return 返回值
      */
-    @ApiOperation(value = "判断验证码是否正确", notes = "判断验证码")
+    @ApiOperation(value = "登录", notes = "登录")
+    @ApiOperationSupport(
+            params = @DynamicParameters(name = "param", properties = {
+                    @DynamicParameter(value = "验证码", name = "code", dataTypeClass = String.class, required = true),
+                    @DynamicParameter(value = "用户名", name = "username", dataTypeClass = String.class, required = true),
+                    @DynamicParameter(value = "密码", name = "password", dataTypeClass = String.class, required = true)
+            })
+    )
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Map<String, Object> loginUser(@ApiParam(name = "param", value = "以json格式传参,key=code", required = true)
-                                         @RequestBody String param, @ApiIgnore HttpSession session) {
-        Map<String, Object> map = StringJsonUtil.stringToJsonObject(param);
+    public Map<String, Object> loginUser(@RequestBody Map<String, Object> param, @ApiIgnore HttpSession session) {
         String code = (String) session.getAttribute("code");
-        log.info("登陆信息：{}", map);
-        Map<String, Object> result = loginService.loginUser(map, code);
+        log.info("登陆信息：{}", param);
+        Map<String, Object> result = loginService.loginUser(param, code);
         Manager data = (Manager) result.get("data");
         session.setAttribute("manager", data);
         return result;
@@ -101,16 +109,19 @@ public class LoginController {
 
     /**
      * 进个人中心页面获取个人信息
-     * @param param 入参
+     * @param data 入参
      * @return 返回值
      */
     @ApiOperation(value = "进入个人中心", notes = "进入个人中心")
+    @ApiOperationSupport(
+            params = @DynamicParameters(name = "Object", properties = {
+                    @DynamicParameter(value = "用户ID", name = "id", dataTypeClass = String.class, required = true)
+            })
+    )
     @RequestMapping(value = "/getPersonInfo", method = RequestMethod.POST)
-    public Map<String, Object> toPersonal(@ApiParam(name = "param", value = "以json格式传递，key=id", required = true)
-                                              @RequestBody String param) {
-        log.info("参数信息：{}", param);
-        Map<String, Object> map = StringJsonUtil.stringToJsonObject(param);
-        return loginService.getPersonInfo(map);
+    public Map<String, Object> toPersonal(@RequestBody Map<String, Object> data) {
+        log.info("参数信息：{}", data);
+        return loginService.getPersonInfo(data);
     }
 
     private Map<String, Object> getData(@ApiIgnore HttpSession session) {

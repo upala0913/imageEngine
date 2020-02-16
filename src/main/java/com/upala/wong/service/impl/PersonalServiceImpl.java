@@ -122,7 +122,8 @@ public class PersonalServiceImpl implements PersonalService {
 		if (StringUtils.isEmpty(ids))
 			return ResponseCommon.responseFail("账户序列号为空，操作终止");
 		String email1 = personalMapper.getEmail(Integer.parseInt(ids));
-		if (!StringUtils.isEmpty(email1)) // 邮箱已绑定，则无需再次绑定
+		// 邮箱已绑定，则无需再次绑定
+		if (!StringUtils.isEmpty(email1))
 			return ResponseCommon.responseFail("邮箱已绑定", email1);
 		if (StringUtils.isEmpty(email))
 			return ResponseCommon.responseFail("邮箱为空");
