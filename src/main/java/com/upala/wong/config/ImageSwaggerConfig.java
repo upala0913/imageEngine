@@ -44,7 +44,8 @@ public class ImageSwaggerConfig {
                 .title("图片文件引擎")
                 .description("图片引擎API")
                 .termsOfServiceUrl("http://localhost:8090/swagger-ui.html")
-                .contact(new Contact("upala", "http://localhost:8090/swagger-ui.html", "upala178421@163.com"))
+                .contact(new Contact("upala", "http://localhost:8090/swagger-ui.html",
+                        "upala178421@163.com"))
                 .build();
     }
 

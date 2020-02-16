@@ -34,8 +34,6 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
-        registry.addResourceHandler("doc.html").addResourceLocations("classpath:/META-INF/resources/");
-        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
 
     /**
@@ -45,7 +43,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new ImageInterceptor()).addPathPatterns("/**")
-                .excludePathPatterns("/user/code/getCodeInfo", "/user/login", "/user/skip/pages", "/personal/getString");
+                .excludePathPatterns("/user/code/getCodeInfo", "/user/login", "/user/skip/pages");
     }
 
 }

@@ -1,6 +1,7 @@
 package com.upala.wong.utils;
 
 import com.alibaba.fastjson.JSONObject;
+import com.upala.wong.common.FinalVarCommon;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,10 +23,9 @@ public class StringJsonUtil {
 	 * @return 返回值
 	 */
 	public static Map<String, Object> stringToJsonObject(String param) {
-		Map<String, Object> map = new HashMap<>(FinalVarUtil.MAP_SIZE);
-		JSONObject jsonObject = null;
+		Map<String, Object> map = new HashMap<>(FinalVarCommon.MAP_SIZE);
 		try {
-			jsonObject = JSONObject.parseObject(param);
+			JSONObject jsonObject = JSONObject.parseObject(param);
 			map.putAll(jsonObject);
 		} catch (RuntimeException e) {
 			map.put("message", param);

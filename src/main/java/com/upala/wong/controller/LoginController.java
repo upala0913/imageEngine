@@ -1,18 +1,18 @@
 package com.upala.wong.controller;
 
+import com.upala.wong.common.FinalVarCommon;
+import com.upala.wong.common.ResponseCommon;
 import com.upala.wong.entity.Manager;
 import com.upala.wong.service.LoginService;
-import com.upala.wong.utils.MessageUtils;
 import com.upala.wong.utils.StringJsonUtil;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 
@@ -28,24 +28,24 @@ import java.util.Map;
 @RequestMapping("/user")
 @CrossOrigin
 @Log4j2
-@Api(value = "ImageEngine相关的API", tags = "ImageEngine相关的API")
+@Api(value = "登录相关的API", tags = "登录相关的API")
 public class LoginController {
 
-    @Autowired
+    @Resource
     private LoginService loginService;
 
     /**
-     * 获取天气数据
+     * 获取验证码
      *
      * @return 返回值
      */
-    @ApiOperation(value = "验证码", notes = "获取登录验证码")
+    @ApiOperation(value = "获取验证码", notes = "获取登录验证码")
     @RequestMapping(value = "/code/getCodeInfo", method = RequestMethod.POST)
     public Map<String, Object> getWeatherData(@ApiIgnore HttpSession session) {
-        String code = StringJsonUtil.getCode(4);
+        String code = StringJsonUtil.getCode(FinalVarCommon.LOGIN_CODE_INFO);
         // 将获取到的验证码保存到session中，以便登陆的时候获取
         session.setAttribute("code", code);
-        return StringJsonUtil.stringToJsonObject(code);
+        return ResponseCommon.responseSuccess("获取验证码成功", code);
     }
 
     /**
@@ -96,7 +96,7 @@ public class LoginController {
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
     public Map<String, Object> logout(@ApiIgnore HttpSession session) {
         session.invalidate();
-        return MessageUtils.getResult(200, "销毁成功", null);
+        return ResponseCommon.responseSuccess("成功推出");
     }
 
     /**
@@ -116,9 +116,9 @@ public class LoginController {
     private Map<String, Object> getData(@ApiIgnore HttpSession session) {
         Manager manager = (Manager) session.getAttribute("manager");
         if (manager == null)
-            return MessageUtils.getResult(10003, "请先登录", null);
+            return ResponseCommon.responseFail("请先登录");
         else
-            return MessageUtils.getResult(10004, "已登陆", manager);
+            return ResponseCommon.responseFail("已登陆");
     }
 
 }
