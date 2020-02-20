@@ -151,4 +151,38 @@ public class PersonalController {
         return personalService.getPerson(data);
     }
 
+    /**
+     * 解除电话的绑定
+     * @param param 入参
+     * @return 返回值
+     */
+    @ApiOperation(value = "解除电话绑定", notes = "解除电话绑定")
+    @ApiOperationSupport(
+        author = "upala",
+        params = @DynamicParameters(name = "param", properties = {
+            @DynamicParameter(name = "id", value = "用户ID", dataTypeClass = String.class, required = true)
+        })
+    )
+    @RequestMapping(value = "/removeMobile", method = RequestMethod.POST)
+    public ResponseCommon removeMobile(@RequestBody Map<String, Object> param) {
+        return personalService.removeMobile(param);
+    }
+
+    /**
+     * 解除电话的绑定
+     * @param param 入参
+     * @return 返回值
+     */
+    @ApiOperation(value = "解除邮箱绑定", notes = "解除邮箱绑定")
+    @ApiOperationSupport(
+        author = "upala",
+        params = @DynamicParameters(name = "param", properties = {
+            @DynamicParameter(name = "id", value = "用户ID", dataTypeClass = String.class, required = true)
+        })
+    )
+    @RequestMapping(value = "/removeEmail", method = RequestMethod.POST)
+    public ResponseCommon removeEmail(@RequestBody Map<String, Object> param) {
+        return personalService.removeEmail(param);
+    }
+
 }

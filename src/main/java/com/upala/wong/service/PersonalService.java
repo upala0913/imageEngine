@@ -23,4 +23,8 @@ public interface PersonalService {
 
 	ResponseCommon getPerson(Map<String, Object> data);
 
+	ResponseCommon removeMobile(Map<String, Object> data);
+
+	ResponseCommon removeEmail(Map<String, Object> data);
+
 }

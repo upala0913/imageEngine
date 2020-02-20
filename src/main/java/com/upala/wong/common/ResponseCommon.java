@@ -56,7 +56,7 @@ public class ResponseCommon {
      * @return 返回map集合
      */
     public static ResponseCommon responseFail(String message) {
-        return new ResponseCommon(FinalVarCommon.RESULT_SUCCESS_CODE, message, FinalVarCommon.RESULT_SUCCESS_FLAG);
+        return new ResponseCommon(FinalVarCommon.RESULT_SUCCESS_CODE, message, FinalVarCommon.RESULT_FAIL_FLAG);
     }
 
     /**
@@ -65,7 +65,7 @@ public class ResponseCommon {
      * @return 返回map集合
      */
     public static ResponseCommon responseFail(String message, Object data) {
-        return new ResponseCommon(FinalVarCommon.RESULT_SUCCESS_CODE, message, FinalVarCommon.RESULT_SUCCESS_FLAG, data);
+        return new ResponseCommon(FinalVarCommon.RESULT_SUCCESS_CODE, message, FinalVarCommon.RESULT_FAIL_FLAG, data);
     }
 
 }

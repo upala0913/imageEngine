@@ -63,4 +63,20 @@
         </if>
     </select>
 
+    <!-- 解除电话的绑定 -->
+    <update id="removeMobile" useGeneratedKeys="true" keyProperty="id" >
+        UPDATE manage SET mobile = NULL WHERE
+        <if test="id != null and id != '' " >
+            id = #{id}
+        </if>
+    </update>
+
+    <!-- 解除邮箱绑定 -->
+    <update id="removeEmail" keyProperty="id" useGeneratedKeys="true" >
+        UPDATE manage SET email = NULL WHERE
+        <if test="id != null and id != '' " >
+            id = #{id}
+        </if>
+    </update>
+
 </mapper>

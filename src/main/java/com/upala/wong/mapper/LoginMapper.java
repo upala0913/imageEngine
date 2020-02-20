@@ -14,6 +14,6 @@ public interface LoginMapper {
 
     Manager loginUser(@Param("param") String username, @Param("password") String password);
 
-    Manager getPersonInfo(@Param("id") int id);
+    Manager getPersonInfo(@Param("id") String id);
 
 }

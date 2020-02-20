@@ -47,14 +47,14 @@ public class PersonalServiceImpl implements PersonalService {
 	@Override
 	public ResponseCommon reName(Map<String, Object> data) {
 		String reName = (String) data.get("reName");
-		String id = (String) data.get("id");
+		String id = data.get("id").toString();
 		if (StringUtils.isEmpty(reName)) {
 			return ResponseCommon.responseFail("真实名称为空");
 		}
 		if (StringUtils.isEmpty(id)) {
 			return ResponseCommon.responseFail("没有唯一标识码");
 		}
-		Integer res = personalMapper.reName(reName, Integer.parseInt(id));
+		Integer res = personalMapper.reName(reName, id);
 		if (res <= 0) {
 			return ResponseCommon.responseFail("实名认证失败");
 		}
@@ -70,8 +70,7 @@ public class PersonalServiceImpl implements PersonalService {
 	public ResponseCommon bindMobile(Map<String, Object> data) {
 		String mobile = (String) data.get("mobile");
 		String check = (String) data.get("check");
-		String ids = (String) data.get("id");
-		int id = Integer.parseInt(ids);
+		String id = (String) data.get("id");
 		if (StringUtils.isEmpty(mobile))
 			return ResponseCommon.responseFail("电话不能为空");
 		if (StringUtils.isEmpty(check))
@@ -93,9 +92,8 @@ public class PersonalServiceImpl implements PersonalService {
 	public ResponseCommon getMessage(Map<String, Object> data) {
 		String mobile = (String) data.get("mobile");
 		String name = (String) data.get("username");
-		String ids = (String) data.get("id");
-		int id = Integer.parseInt(ids);
-		if (StringUtils.isEmpty(ids))
+		String id = (String) data.get("id");
+		if (StringUtils.isEmpty(id))
 			return ResponseCommon.responseFail("没有唯一的标识码", null);
 		String mobile1 = personalMapper.getMobile(id);
 		if (!StringUtils.isEmpty(mobile1)) // 电话已绑定，则不需要再次绑定
@@ -118,10 +116,10 @@ public class PersonalServiceImpl implements PersonalService {
 	public ResponseCommon getEmailMessage(Map<String, Object> data) {
 		String email = (String) data.get("email");
 		String name = (String) data.get("username");
-		String ids = (String) data.get("id");
-		if (StringUtils.isEmpty(ids))
+		String id = (String) data.get("id");
+		if (StringUtils.isEmpty(id))
 			return ResponseCommon.responseFail("账户序列号为空，操作终止");
-		String email1 = personalMapper.getEmail(Integer.parseInt(ids));
+		String email1 = personalMapper.getEmail(id);
 		// 邮箱已绑定，则无需再次绑定
 		if (!StringUtils.isEmpty(email1))
 			return ResponseCommon.responseFail("邮箱已绑定", email1);
@@ -148,9 +146,8 @@ public class PersonalServiceImpl implements PersonalService {
 	public ResponseCommon bindEmail(Map<String, Object> data) {
 		String email = (String) data.get("email");
 		String check = (String) data.get("check");
-		String ids = (String) data.get("id");
-		int id = Integer.parseInt(ids);
-		if (StringUtils.isEmpty(ids))
+		String id = (String) data.get("id");
+		if (StringUtils.isEmpty(id))
 			return ResponseCommon.responseFail("账户序列号为空，操作终止");
 		if (StringUtils.isEmpty(check))
 			return ResponseCommon.responseFail("邮箱验证码为空，操作终止");
@@ -174,10 +171,48 @@ public class PersonalServiceImpl implements PersonalService {
 		String id = (String) data.get("id");
 		if (StringUtils.isEmpty(id))
 			return ResponseCommon.responseFail("账户序列号为空，操作终止");
-		Manager personal = personalMapper.getPersonal(Integer.parseInt(id));
+		Manager personal = personalMapper.getPersonal(id);
 		if (personal == null)
 			return ResponseCommon.responseFail("没有该用户");
 		return ResponseCommon.responseSuccess("查询成功", personal);
+	}
+
+	/**
+	 * 解除电话绑定
+	 * @param data 入参
+	 * @return 返回值
+	 */
+	@Override
+	public ResponseCommon removeMobile(Map<String, Object> data) {
+		return removeBind(data, "电话", "mobile");
+	}
+
+	/**
+	 * 解除邮箱绑定
+	 * @param data 入参
+	 * @return 返回值
+	 */
+	@Override
+	public ResponseCommon removeEmail(Map<String, Object> data) {
+		return removeBind(data, "邮箱", "email");
+	}
+
+	private ResponseCommon removeBind(Map<String, Object> data, String message, String flag) {
+		Integer res = null;
+		Object idObj = data.get("id");
+		if (idObj == null)
+			return ResponseCommon.responseFail("用户ID为空");
+		switch(flag) {
+			case "mobile":
+				res = personalMapper.removeMobile(idObj.toString());
+				break;
+			case "email":
+				res = personalMapper.removeEmail(idObj.toString());
+				break;
+		}
+		if (res == null)
+			return ResponseCommon.responseFail(message + "解绑失败");
+		return ResponseCommon.responseSuccess(message + "解绑成功", res);
 	}
 
 }

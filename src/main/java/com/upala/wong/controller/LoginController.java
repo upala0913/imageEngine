@@ -153,7 +153,7 @@ public class LoginController {
         if (manager == null)
             return ResponseCommon.responseFail("请先登录");
         else
-            return ResponseCommon.responseFail("已登陆");
+            return ResponseCommon.responseSuccess("已登陆");
     }
 
 }

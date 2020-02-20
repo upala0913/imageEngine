@@ -65,8 +65,10 @@ public class LoginServiceImpl implements LoginService {
      */
     @Override
     public ResponseCommon getPersonInfo(Map<String, Object> param) {
-        int id = Integer.parseInt(param.get("id").toString());
+        String id = param.get("id").toString();
         Manager personInfo = loginMapper.getPersonInfo(id);
+        if (personInfo == null)
+            return ResponseCommon.responseFail("获取个人数据失败");
         return ResponseCommon.responseSuccess("获取个人数据成功", personInfo);
     }
 

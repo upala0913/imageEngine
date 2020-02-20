@@ -10,16 +10,20 @@ import org.apache.ibatis.annotations.Param;
  *****************************/
 public interface PersonalMapper {
 
-	Integer reName(@Param("reName") String reName, @Param("id") int id);
+	Integer reName(@Param("reName") String reName, @Param("id") String id);
 
-	Integer bindMobile(@Param("mobile") String mobile, @Param("id") int id);
+	Integer bindMobile(@Param("mobile") String mobile, @Param("id") String id);
 
-	Integer bindEmail(@Param("email") String email, @Param("id") int id);
+	Integer bindEmail(@Param("email") String email, @Param("id") String id);
 
-	Manager getPersonal(@Param("id") int id);
+	Manager getPersonal(@Param("id") String id);
 
-	String getMobile(@Param("id") int id);
+	String getMobile(@Param("id") String id);
 
-	String getEmail(@Param("id") int id);
+	String getEmail(@Param("id") String id);
+
+	Integer removeMobile(@Param("id") String id);
+
+	Integer removeEmail(@Param("id") String id);
 
 }
