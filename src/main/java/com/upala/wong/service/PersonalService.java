@@ -1,5 +1,7 @@
 package com.upala.wong.service;
 
+import com.upala.wong.common.ResponseCommon;
+
 import java.util.Map;
 
 /*****************************
@@ -9,16 +11,16 @@ import java.util.Map;
  *****************************/
 public interface PersonalService {
 
-	Map<String, Object> reName(Map<String, Object> data);
+	ResponseCommon reName(Map<String, Object> data);
 
-	Map<String, Object> bindMobile(Map<String, Object> data);
+	ResponseCommon bindMobile(Map<String, Object> data);
 
-	Map<String, Object> getMessage(Map<String, Object> data);
+	ResponseCommon getMessage(Map<String, Object> data);
 
-	Map<String, Object> getEmailMessage(Map<String, Object> data);
+	ResponseCommon getEmailMessage(Map<String, Object> data);
 
-	Map<String, Object> bindEmail(Map<String, Object> data);
+	ResponseCommon bindEmail(Map<String, Object> data);
 
-	Map<String, Object> getPerson(Map<String, Object> data);
+	ResponseCommon getPerson(Map<String, Object> data);
 
 }

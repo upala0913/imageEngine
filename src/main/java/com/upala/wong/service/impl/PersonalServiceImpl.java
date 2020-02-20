@@ -45,7 +45,7 @@ public class PersonalServiceImpl implements PersonalService {
 	 * @return 返回值
 	 */
 	@Override
-	public Map<String, Object> reName(Map<String, Object> data) {
+	public ResponseCommon reName(Map<String, Object> data) {
 		String reName = (String) data.get("reName");
 		String id = (String) data.get("id");
 		if (StringUtils.isEmpty(reName)) {
@@ -67,7 +67,7 @@ public class PersonalServiceImpl implements PersonalService {
 	 * @return 返回值
 	 */
 	@Override
-	public Map<String, Object> bindMobile(Map<String, Object> data) {
+	public ResponseCommon bindMobile(Map<String, Object> data) {
 		String mobile = (String) data.get("mobile");
 		String check = (String) data.get("check");
 		String ids = (String) data.get("id");
@@ -90,7 +90,7 @@ public class PersonalServiceImpl implements PersonalService {
 	 * @return 返回值
 	 */
 	@Override
-	public Map<String, Object> getMessage(Map<String, Object> data) {
+	public ResponseCommon getMessage(Map<String, Object> data) {
 		String mobile = (String) data.get("mobile");
 		String name = (String) data.get("username");
 		String ids = (String) data.get("id");
@@ -115,7 +115,7 @@ public class PersonalServiceImpl implements PersonalService {
 	 * @return 返回值
 	 */
 	@Override
-	public Map<String, Object> getEmailMessage(Map<String, Object> data) {
+	public ResponseCommon getEmailMessage(Map<String, Object> data) {
 		String email = (String) data.get("email");
 		String name = (String) data.get("username");
 		String ids = (String) data.get("id");
@@ -145,7 +145,7 @@ public class PersonalServiceImpl implements PersonalService {
 	 * @return 返回值
 	 */
 	@Override
-	public Map<String, Object> bindEmail(Map<String, Object> data) {
+	public ResponseCommon bindEmail(Map<String, Object> data) {
 		String email = (String) data.get("email");
 		String check = (String) data.get("check");
 		String ids = (String) data.get("id");
@@ -170,7 +170,7 @@ public class PersonalServiceImpl implements PersonalService {
 	 * @return 返回值
 	 */
 	@Override
-	public Map<String, Object> getPerson(Map<String, Object> data) {
+	public ResponseCommon getPerson(Map<String, Object> data) {
 		String id = (String) data.get("id");
 		if (StringUtils.isEmpty(id))
 			return ResponseCommon.responseFail("账户序列号为空，操作终止");

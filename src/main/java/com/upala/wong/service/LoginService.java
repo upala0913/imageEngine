@@ -1,5 +1,7 @@
 package com.upala.wong.service;
 
+import com.upala.wong.common.ResponseCommon;
+
 import java.util.Map;
 
 /********************************
@@ -12,8 +14,8 @@ import java.util.Map;
 
 public interface LoginService {
 
-    Map<String, Object> loginUser(Map<String, Object> param, String code);
+    ResponseCommon loginUser(Map<String, Object> param, String code);
 
-    Map<String, Object> getPersonInfo(Map<String, Object> param);
+    ResponseCommon getPersonInfo(Map<String, Object> param);
 
 }

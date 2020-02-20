@@ -4,7 +4,6 @@ import com.upala.wong.common.ResponseCommon;
 import com.upala.wong.entity.Manager;
 import com.upala.wong.mapper.LoginMapper;
 import com.upala.wong.service.LoginService;
-import com.upala.wong.utils.MessageUtils;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.util.StringUtils;
 
@@ -32,7 +31,7 @@ public class LoginServiceImpl implements LoginService {
      * @return 返回值<b>Map<String, Object></b>
      */
     @Override
-    public Map<String, Object> loginUser(Map<String, Object> param, String code) {
+    public ResponseCommon loginUser(Map<String, Object> param, String code) {
         String key = (String) param.get("code");
         if (!StringUtils.isEmpty(code)) {
             // 小写
@@ -65,7 +64,7 @@ public class LoginServiceImpl implements LoginService {
      * @return 返回值
      */
     @Override
-    public Map<String, Object> getPersonInfo(Map<String, Object> param) {
+    public ResponseCommon getPersonInfo(Map<String, Object> param) {
         int id = Integer.parseInt(param.get("id").toString());
         Manager personInfo = loginMapper.getPersonInfo(id);
         return ResponseCommon.responseSuccess("获取个人数据成功", personInfo);

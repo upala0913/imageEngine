@@ -10,7 +10,8 @@ import com.upala.wong.service.LoginService;
 import com.upala.wong.utils.StringJsonUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
@@ -32,6 +33,10 @@ import java.util.Map;
 @CrossOrigin
 @Log4j2
 @Api(value = "登录相关的API", tags = "登录相关的API")
+@ApiResponses({
+    @ApiResponse(code = 200, message = "响应成功"),
+    @ApiResponse(code = 3426, message = "响应出错")
+})
 public class LoginController {
 
     @Resource
@@ -43,8 +48,11 @@ public class LoginController {
      * @return 返回值
      */
     @ApiOperation(value = "获取验证码", notes = "获取登录验证码")
+    @ApiOperationSupport(
+        author = "upala"
+    )
     @RequestMapping(value = "/code/getCodeInfo", method = RequestMethod.POST)
-    public Map<String, Object> getWeatherData(@ApiIgnore HttpSession session) {
+    public ResponseCommon getWeatherData(@ApiIgnore HttpSession session) {
         String code = StringJsonUtil.getCode(FinalVarCommon.LOGIN_CODE_INFO);
         // 将获取到的验证码保存到session中，以便登陆的时候获取
         session.setAttribute("code", code);
@@ -53,78 +61,94 @@ public class LoginController {
 
     /**
      * 登陆信息
+     *
      * @param param 入参
      * @return 返回值
      */
     @ApiOperation(value = "登录", notes = "登录")
     @ApiOperationSupport(
-            params = @DynamicParameters(name = "param", properties = {
-                    @DynamicParameter(value = "验证码", name = "code", dataTypeClass = String.class, required = true),
-                    @DynamicParameter(value = "用户名", name = "username", dataTypeClass = String.class, required = true),
-                    @DynamicParameter(value = "密码", name = "password", dataTypeClass = String.class, required = true)
-            })
+        author = "upala",
+        params = @DynamicParameters(name = "param", properties = {
+            @DynamicParameter(value = "验证码", name = "code", dataTypeClass = String.class, required = true),
+            @DynamicParameter(value = "用户名", name = "username", dataTypeClass = String.class, required = true),
+            @DynamicParameter(value = "密码", name = "password", dataTypeClass = String.class, required = true)
+        })
     )
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Map<String, Object> loginUser(@RequestBody Map<String, Object> param, @ApiIgnore HttpSession session) {
+    public ResponseCommon loginUser(@RequestBody Map<String, Object> param, @ApiIgnore HttpSession session) {
         String code = (String) session.getAttribute("code");
         log.info("登陆信息：{}", param);
-        Map<String, Object> result = loginService.loginUser(param, code);
-        Manager data = (Manager) result.get("data");
+        ResponseCommon result = loginService.loginUser(param, code);
+        Manager data = (Manager) result.getData();
         session.setAttribute("manager", data);
         return result;
     }
 
     /**
      * 跳转页面
+     *
      * @return 返回值
      */
     @ApiOperation(value = "页面跳转", notes = "页面跳转")
+    @ApiOperationSupport(
+        author = "upala"
+    )
     @RequestMapping(value = "/skip/pages", method = RequestMethod.POST)
-    public Map<String, Object> skipPages(@ApiIgnore HttpSession session) {
+    public ResponseCommon skipPages(@ApiIgnore HttpSession session) {
         return getData(session);
     }
 
     /**
      * 获取用户信息
+     *
      * @param session 会话session
      * @return 返回值
      */
     @ApiOperation(value = "获取用户信息", notes = "获取用户信息")
+    @ApiOperationSupport(
+        author = "upala"
+    )
     @RequestMapping(value = "/adminInfo", method = RequestMethod.POST)
-    public Map<String, Object> getAdminInfo(@ApiIgnore HttpSession session) {
+    public ResponseCommon getAdminInfo(@ApiIgnore HttpSession session) {
         return getData(session);
     }
 
     /**
      * 退出--销毁session
+     *
      * @param session 参数
      * @return 返回值
      */
     @ApiOperation(value = "退出登录", notes = "退出登录")
+    @ApiOperationSupport(
+        author = "upala"
+    )
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
-    public Map<String, Object> logout(@ApiIgnore HttpSession session) {
+    public ResponseCommon logout(@ApiIgnore HttpSession session) {
         session.invalidate();
         return ResponseCommon.responseSuccess("成功推出");
     }
 
     /**
      * 进个人中心页面获取个人信息
+     *
      * @param data 入参
      * @return 返回值
      */
     @ApiOperation(value = "进入个人中心", notes = "进入个人中心")
     @ApiOperationSupport(
-            params = @DynamicParameters(name = "Object", properties = {
-                    @DynamicParameter(value = "用户ID", name = "id", dataTypeClass = String.class, required = true)
-            })
+        author = "upala",
+        params = @DynamicParameters(name = "Object", properties = {
+            @DynamicParameter(value = "用户ID", name = "id", dataTypeClass = String.class, required = true)
+        })
     )
     @RequestMapping(value = "/getPersonInfo", method = RequestMethod.POST)
-    public Map<String, Object> toPersonal(@RequestBody Map<String, Object> data) {
+    public ResponseCommon toPersonal(@RequestBody Map<String, Object> data) {
         log.info("参数信息：{}", data);
         return loginService.getPersonInfo(data);
     }
 
-    private Map<String, Object> getData(@ApiIgnore HttpSession session) {
+    private ResponseCommon getData(@ApiIgnore HttpSession session) {
         Manager manager = (Manager) session.getAttribute("manager");
         if (manager == null)
             return ResponseCommon.responseFail("请先登录");

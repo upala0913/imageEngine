@@ -1,7 +1,9 @@
 package com.upala.wong.common;
 
-import java.util.HashMap;
-import java.util.Map;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 /********************************
  *  @program image
@@ -11,32 +13,41 @@ import java.util.Map;
  *  @version 0.0.1
  ********************************/
 
+@Data
+@AllArgsConstructor
+@ApiModel
 public class ResponseCommon {
+
+    @ApiModelProperty(value = "响应码", dataType = "Integer")
+    private Integer code;
+    @ApiModelProperty(value = "响应信息", dataType = "String")
+    private String message;
+    @ApiModelProperty(value = "响应状态", dataType = "boolean")
+    private boolean status;
+    @ApiModelProperty(value = "响应数据", dataType = "Object")
+    private Object data;
+
+    public ResponseCommon(int code, String message, boolean status) {
+        this.code = code;
+        this.message = message;
+        this.status = status;
+    }
 
     /**
      * 成功返回，带数据
      * @param obj 数据
      * @return 返回map集合
      */
-    public static Map<String, Object> responseSuccess(String msg, Object obj) {
-        Map<String, Object> map = new HashMap<>(FinalVarCommon.MAP_SIZE);
-        map.put("status", FinalVarCommon.RESULT_SUCCESS_FLAG);
-        map.put("code", FinalVarCommon.RESULT_SUCCESS_CODE);
-        map.put("message", msg);
-        map.put("data", obj);
-        return map;
+    public static ResponseCommon responseSuccess(String msg, Object obj) {
+        return new ResponseCommon(FinalVarCommon.RESULT_SUCCESS_CODE, msg, FinalVarCommon.RESULT_SUCCESS_FLAG, obj);
     }
 
     /**
      * 成功返回，不带数据
      * @return 返回map集合
      */
-    public static Map<String, Object> responseSuccess(String message) {
-        Map<String, Object> map = new HashMap<>(FinalVarCommon.MAP_SIZE);
-        map.put("status", FinalVarCommon.RESULT_SUCCESS_FLAG);
-        map.put("code", FinalVarCommon.RESULT_SUCCESS_CODE);
-        map.put("message", message);
-        return map;
+    public static ResponseCommon responseSuccess(String message) {
+        return new ResponseCommon(FinalVarCommon.RESULT_SUCCESS_CODE, message, FinalVarCommon.RESULT_SUCCESS_FLAG);
     }
 
     /**
@@ -44,12 +55,8 @@ public class ResponseCommon {
      * @param message 错误信息
      * @return 返回map集合
      */
-    public static Map<String, Object> responseFail(String message) {
-        Map<String, Object> map = new HashMap<>(FinalVarCommon.MAP_SIZE);
-        map.put("status", FinalVarCommon.RESULT_FAIL_FLAG);
-        map.put("code", FinalVarCommon.RESULT_FAIL_CODE);
-        map.put("message", message);
-        return map;
+    public static ResponseCommon responseFail(String message) {
+        return new ResponseCommon(FinalVarCommon.RESULT_SUCCESS_CODE, message, FinalVarCommon.RESULT_SUCCESS_FLAG);
     }
 
     /**
@@ -57,13 +64,8 @@ public class ResponseCommon {
      * @param message 错误信息
      * @return 返回map集合
      */
-    public static Map<String, Object> responseFail(String message, Object data) {
-        Map<String, Object> map = new HashMap<>(FinalVarCommon.MAP_SIZE);
-        map.put("status", FinalVarCommon.RESULT_FAIL_FLAG);
-        map.put("code", FinalVarCommon.RESULT_FAIL_CODE);
-        map.put("message", message);
-        map.put("data", data);
-        return map;
+    public static ResponseCommon responseFail(String message, Object data) {
+        return new ResponseCommon(FinalVarCommon.RESULT_SUCCESS_CODE, message, FinalVarCommon.RESULT_SUCCESS_FLAG, data);
     }
 
 }
