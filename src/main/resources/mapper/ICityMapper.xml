@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "com.upala.wong.mapper.CityMapper">
+
+    <!-- 查询城市信息 -->
+    <select id="queryProvinces" resultType="com.upala.wong.entity.Province" >
+        SELECT
+            id, `name`, parentid AS parentId, parentname AS parentName,
+            areacode AS areaCode, zipcode AS zipCode, depth, ident
+        FROM prov_city_town
+        <where>
+            <if test="parentId != null" >
+                parentid = #{parentId}
+            </if>
+        </where>
+    </select>
+
+</mapper>
