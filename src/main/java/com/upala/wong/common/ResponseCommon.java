@@ -26,11 +26,29 @@ public class ResponseCommon {
     private boolean status;
     @ApiModelProperty(value = "响应数据", dataType = "Object")
     private Object data;
+    @ApiModelProperty(value = "分页是的总数", dataType = "Integer")
+    private Integer total;
 
-    public ResponseCommon(int code, String message, boolean status) {
+    private ResponseCommon(int code, String message, boolean status) {
         this.code = code;
         this.message = message;
         this.status = status;
+    }
+
+    private ResponseCommon(int code, String message, boolean status, Object data) {
+        this.code = code;
+        this.message = message;
+        this.status = status;
+        this.data = data;
+    }
+
+    /**
+     * 成功返回，带分页的数据
+     * @param obj 数据
+     * @return 返回map集合
+     */
+    public static ResponseCommon responseSuccess(String msg, Object obj, Integer total) {
+        return new ResponseCommon(FinalVarCommon.RESULT_SUCCESS_CODE, msg, FinalVarCommon.RESULT_SUCCESS_FLAG, obj, total);
     }
 
     /**

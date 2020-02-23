@@ -16,6 +16,9 @@ import java.util.List;
 
 public interface ImageSpaceSettingMapper {
 
-    List<DocumentSpace> queryDocumentFolder(@Param("delFlag") Integer delFlag) throws ExceptionUtils;
+    List<DocumentSpace> queryDocumentFolder(@Param("delFlag") Integer delFlag, @Param("start") Integer start,
+                                            @Param("limit") Integer limit)  throws ExceptionUtils;
+
+    Integer getTotal(@Param("delFlag") Integer delFlag) throws ExceptionUtils;
 
 }

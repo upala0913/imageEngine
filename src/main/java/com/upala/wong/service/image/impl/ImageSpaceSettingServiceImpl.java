@@ -27,14 +27,18 @@ public class ImageSpaceSettingServiceImpl implements ImageSpaceSettingService {
     private ImageSpaceSettingMapper imageSpaceSettingMapper;
 
     @Override
-    public ResponseCommon queryDocumentFolder(Integer delFlag) {
+    public ResponseCommon queryDocumentFolder(Integer delFlag, Integer index, Integer limit) {
         List<DocumentSpace> spaceList = null;
+        Integer start = (index - 1) * limit;
+        Integer total = null;
         try {
-            spaceList = imageSpaceSettingMapper.queryDocumentFolder(delFlag);
+            spaceList = imageSpaceSettingMapper.queryDocumentFolder(delFlag, start, limit);
+            total = imageSpaceSettingMapper.getTotal(delFlag);
         } catch (ExceptionUtils e) {
             log.error("查询数据出现异常：{}", e.getMessage());
             return ResponseCommon.responseFail("查询数据竖线异常");
         }
-        return ResponseCommon.responseSuccess("查询数据成功", spaceList);
+        return ResponseCommon.responseSuccess("查询数据成功", spaceList, total);
     }
+
 }

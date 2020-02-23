@@ -13,6 +13,17 @@
                 del_flag = #{delFlag}
             </if>
         </where>
+        LIMIT 0, 10
+    </select>
+
+    <!-- 获取数据总记录数 -->
+    <select id="getTotal" resultType="Integer" >
+        SELECT COUNT(*) FROM document_space
+        <where>
+            <if test="delFlag != null" >
+                del_flag = #{delFlag}
+            </if>
+        </where>
     </select>
 
 </mapper>

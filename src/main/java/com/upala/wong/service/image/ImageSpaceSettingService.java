@@ -12,6 +12,6 @@ import com.upala.wong.common.ResponseCommon;
 
 public interface ImageSpaceSettingService {
 
-    ResponseCommon queryDocumentFolder(Integer delFlag);
+    ResponseCommon queryDocumentFolder(Integer delFlag, Integer index, Integer limit);
 
 }

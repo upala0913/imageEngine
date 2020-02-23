@@ -49,10 +49,22 @@ public class ImageSpaceSettingController {
     )
     public ResponseCommon queryDocumentFolder(@RequestBody Map<String, Object> param) {
         Object data = param.get("delFlag");
+        Object indexObj = param.get("index");
+        Object limitObj = param.get("limit");
+        ResponseCommon res = null;
         if (data == null)
             return ResponseCommon.responseFail("目录文件夹删除标记为空");
-        int delFlag = Integer.parseInt(data.toString());
-        return imageSpaceSettingService.queryDocumentFolder(delFlag);
+        if (indexObj == null || limitObj == null)
+            return ResponseCommon.responseFail("分页参数为空");
+        Integer index = Integer.parseInt(indexObj.toString());
+        Integer limit = Integer.parseInt(limitObj.toString());
+        if ("".equals(data)) {
+             res = imageSpaceSettingService.queryDocumentFolder(null, index, limit);
+        } else {
+            Integer delFlag = Integer.parseInt(data.toString());
+            res = imageSpaceSettingService.queryDocumentFolder(delFlag, index, limit);
+        }
+        return res;
     }
 
 }
