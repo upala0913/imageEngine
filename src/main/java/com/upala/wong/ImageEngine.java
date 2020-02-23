@@ -13,7 +13,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 
 @SpringBootApplication
 @Log4j2
-@MapperScan("com.upala.wong.mapper")
+@MapperScan("com.upala.wong.mapper.**")
 public class ImageEngine extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
