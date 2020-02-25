@@ -44,7 +44,9 @@ public class ImageSpaceSettingController {
     @ApiOperationSupport(
         author = "upala",
         params = @DynamicParameters(name = "param", properties = {
-            @DynamicParameter(name = "delFlag", value = "文件夹删除标记", dataTypeClass = Integer.class)
+            @DynamicParameter(name = "delFlag", value = "文件夹删除标记", required = true, dataTypeClass = Integer.class),
+            @DynamicParameter(name = "index", value = "首页", required = true, dataTypeClass = Integer.class),
+            @DynamicParameter(name = "limit", value = "查询的页数", required = true, dataTypeClass = Integer.class)
         })
     )
     public ResponseCommon queryDocumentFolder(@RequestBody Map<String, Object> param) {
