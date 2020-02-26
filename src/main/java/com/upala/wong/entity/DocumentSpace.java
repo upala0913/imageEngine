@@ -27,7 +27,9 @@ public class DocumentSpace {
     private Date createTime;
     // 删除标识符：0-未删除，1-删除
     private Integer delFlag;
-    // 删除类型：0-逻辑删除，1-物理删除（彻底删除）
-    private Integer delFlagType;
+    // 修改时间
+    private Date updateTime;
+    // 用户ID
+    private String userId;
 
 }

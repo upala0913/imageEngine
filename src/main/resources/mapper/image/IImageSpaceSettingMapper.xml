@@ -6,7 +6,7 @@
     <!-- 查询所有的目录文件夹 -->
     <select id="queryDocumentFolder" resultType="com.upala.wong.entity.DocumentSpace" >
         SELECT id, `name`, `index`, `type`, create_time AS createTime, del_flag AS delFlag,
-        del_flag_type AS delFlagType
+        update_time AS updateTime, user_id AS userId
         FROM document_space
         <where>
             <if test="delFlag != null" >
